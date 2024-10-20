@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-crud-api",
+  "version": "1.0.0",
+  "description": "Simple CRUD API using in-memory database",
+  "main": "index.js",
+	"type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["nodejs", "api", "crud"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
