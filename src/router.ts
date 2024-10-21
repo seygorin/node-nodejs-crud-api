@@ -3,7 +3,7 @@ import url from 'url'
 import * as userController from './controllers/userController'
 import {notFound, serverError} from './utils/errorHandlers'
 
-function router(req: IncomingMessage, res: ServerResponse): void {
+async function router(req: IncomingMessage, res: ServerResponse): Promise<void> {
   try {
     const parsedUrl = url.parse(req.url || '', true)
     const path = parsedUrl.pathname
@@ -13,10 +13,10 @@ function router(req: IncomingMessage, res: ServerResponse): void {
     if (trimmedPath === 'api/users') {
       switch (method) {
         case 'get':
-          userController.getAllUsers(req, res)
+          await userController.getAllUsers(req, res)
           break
         case 'post':
-          userController.createUser(req, res)
+          await userController.createUser(req, res)
           break
         default:
           notFound(res)
@@ -25,13 +25,13 @@ function router(req: IncomingMessage, res: ServerResponse): void {
       const userId = trimmedPath.split('/')[2]
       switch (method) {
         case 'get':
-          userController.getUser(req, res, userId)
+          await userController.getUser(req, res, userId)
           break
         case 'put':
-          userController.updateUser(req, res, userId)
+          await userController.updateUser(req, res, userId)
           break
         case 'delete':
-          userController.deleteUser(req, res, userId)
+          await userController.deleteUser(req, res, userId)
           break
         default:
           notFound(res)

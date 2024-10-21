@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "start:dev": "nodemon --exec \"node --env-file=.env --import ./register.js\" index.ts",
-    "build": "webpack --mode=production",
     "start:prod": "npm run build && node --env-file=.env dist/bundle.js",
+    "start:multi": "node --env-file=.env --import ./register.js index.ts --cluster",
+    "build": "webpack --mode=production",
     "test": "jest"
   },
   "keywords": [
