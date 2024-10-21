@@ -1,13 +1,14 @@
+import {IncomingMessage, ServerResponse} from 'http'
 import url from 'url'
-import * as userController from './controllers/userController.js'
-import {notFound, serverError} from './utils/errorHandlers.js'
+import * as userController from './controllers/userController'
+import {notFound, serverError} from './utils/errorHandlers'
 
-function router(req, res) {
+function router(req: IncomingMessage, res: ServerResponse): void {
   try {
-    const parsedUrl = url.parse(req.url, true)
+    const parsedUrl = url.parse(req.url || '', true)
     const path = parsedUrl.pathname
-    const trimmedPath = path.replace(/^\/+|\/+$/g, '')
-    const method = req.method.toLowerCase()
+    const trimmedPath = path ? path.replace(/^\/+|\/+$/g, '') : ''
+    const method = req.method ? req.method.toLowerCase() : ''
 
     if (trimmedPath === 'api/users') {
       switch (method) {
@@ -39,7 +40,7 @@ function router(req, res) {
       notFound(res)
     }
   } catch (error) {
-    serverError(res, error.message)
+    serverError(res, error instanceof Error ? error.message : 'Unknown error')
   }
 }
 

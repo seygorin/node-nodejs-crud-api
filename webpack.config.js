@@ -1,36 +1,41 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path'
+import {fileURLToPath} from 'url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default {
   target: 'node',
-  entry: './index.js',
+  entry: './index.ts',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     module: true,
-    chunkFormat: 'module'
+    chunkFormat: 'module',
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   experiments: {
-    outputModule: true
+    outputModule: true,
   },
   externals: {
-    uuid: 'uuid'
+    uuid: 'uuid',
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
+        test: /\.ts$/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              configFile: 'tsconfig.build.json'
+            }
           }
-        }
-      }
-    ]
-  }
-};
+        ],
+        exclude: /node_modules/,
+      },
+    ],
+  },
+}
